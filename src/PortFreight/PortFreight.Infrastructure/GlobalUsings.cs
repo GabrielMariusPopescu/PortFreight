@@ -7,3 +7,4 @@ global using PortFreight.Domain.ValueObjects;
 global using System;
 global using Microsoft.EntityFrameworkCore.Infrastructure;
 global using Microsoft.EntityFrameworkCore.Migrations;
+global using PortFreight.Infrastructure.Repositories.Contracts;
