@@ -23,10 +23,26 @@ builder.Services.AddControllers(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new()
+    {
+        Title = "Port Freight API",
+        Version = "v1",
+        Description = "API documentation for the Port Freight system."
+    });
+
+    // Enable XML comments
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+        options.IncludeXmlComments(xmlPath);
+});
+
 
 var app = builder.Build();
 
+app.UseCorrelationIdMiddleware();
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseGlobalExceptionMiddleware();
 app.UseMiddleware<ValidationMiddleware>();

@@ -1,4 +1,6 @@
-﻿namespace PortFreight.Api.Controllers;
+﻿using static Microsoft.CodeAnalysis.CSharp.SyntaxTokenParser;
+
+namespace PortFreight.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -21,6 +23,13 @@ public class CustomersController(ICustomerService service) : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateCustomerDto dto)
     {
+        var validator = new CreateCustomerValidator();
+        var validationResult = validator.Validate(dto);
+        if (!validationResult.IsValid) 
+        {
+            HttpContext.Items["ValidationErrors"] = validationResult.Errors;
+            return BadRequest();
+        }
         var customer = dto.ToCustomer();
         var created = await service.CreateCustomerAsync(customer);
         return CreatedAtAction(nameof(Get), new { id = created.Id }, created.ToDto());

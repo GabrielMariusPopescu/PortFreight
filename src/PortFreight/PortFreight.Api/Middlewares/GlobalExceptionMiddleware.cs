@@ -31,7 +31,7 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
         {
             Message = ex.Message,
             Detail = $"Inner Exception: {ex.InnerException?.Message}\n" +
-                     $"CorrelationId: {context.TraceIdentifier}",
+                     $"CorrelationId: {context.Items["X-Correlation-ID"]?.ToString()}",
             StatusCode = statusCode
         };
 

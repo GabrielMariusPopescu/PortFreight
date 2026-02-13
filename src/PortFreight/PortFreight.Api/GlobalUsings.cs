@@ -1,4 +1,6 @@
-﻿global using Microsoft.AspNetCore.Mvc;
+﻿// Global using directives
+
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.EntityFrameworkCore;
 global using PortFreight.Api.Middlewares;
@@ -12,6 +14,7 @@ global using PortFreight.Application.DTOs.VesselDTO;
 global using PortFreight.Application.Mappings;
 global using PortFreight.Application.Services.Contracts;
 global using PortFreight.Application.Services.Implementation;
+global using PortFreight.Application.Validation.Implementation;
 global using PortFreight.Infrastructure;
 global using PortFreight.Infrastructure.Repositories.Contracts;
 global using PortFreight.Infrastructure.Repositories.Implementation;
