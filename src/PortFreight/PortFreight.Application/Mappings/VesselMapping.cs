@@ -5,7 +5,7 @@ public static class VesselMapping
     public static VesselDto ToDto(this Vessel vessel) =>
         new(vessel.Id, vessel.Name, vessel.IMO, vessel.CapacityTEU);
 
-    public static Vessel ToEntity(this CreateVesselDto dto) =>
+    public static Vessel ToVessel(this CreateVesselDto dto) =>
         new()
         {
             Name = dto.Name,

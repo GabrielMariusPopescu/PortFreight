@@ -5,7 +5,7 @@ public static class PortMapping
     public static PortDto ToDto(this Port port) =>
         new(port.Id, port.Name, port.UNLocode, port.Country);
 
-    public static Port ToEntity(this CreatePortDto dto) =>
+    public static Port ToPort(this CreatePortDto dto) =>
         new()
         {
             Name = dto.Name,

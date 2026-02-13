@@ -5,7 +5,7 @@ public static class CustomerMapping
     public static CustomerDto ToDto(this Customer customer) =>
         new(customer.Id, customer.Name, customer.Email, customer.Phone);
 
-    public static Customer ToEntity(this CreateCustomerDto dto) =>
+    public static Customer ToCustomer(this CreateCustomerDto dto) =>
         new()
         {
             Name = dto.Name,

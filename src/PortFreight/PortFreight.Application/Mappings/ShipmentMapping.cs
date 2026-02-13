@@ -14,7 +14,7 @@ public static class ShipmentMapping
             shipment.CreatedAt
         );
 
-    public static Shipment ToEntity(this CreateShipmentDto dto) =>
+    public static Shipment ToShipment(this CreateShipmentDto dto) =>
         new()
         {
             ReferenceNumber = dto.ReferenceNumber,

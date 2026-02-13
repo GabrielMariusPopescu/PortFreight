@@ -5,7 +5,7 @@ public static class ContainerMapping
     public static ContainerDto ToDto(this Container container) =>
         new(container.Id, container.ContainerNumber, container.Type, container.Weight, container.ShipmentId);
 
-    public static Container ToEntity(this CreateContainerDto dto, Guid shipmentId) =>
+    public static Container ToContainer(this CreateContainerDto dto, Guid shipmentId) =>
         new()
         {
             ContainerNumber = dto.ContainerNumber,

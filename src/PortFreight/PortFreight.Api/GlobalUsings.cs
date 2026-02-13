@@ -1,6 +1,14 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using PortFreight.Application.DTOs.ContainerDTO;
+global using PortFreight.Application.DTOs.CustomerDTO;
+global using PortFreight.Application.DTOs.PortDTO;
+global using PortFreight.Application.DTOs.VesselDTO;
+global using PortFreight.Application.Mappings;
 global using PortFreight.Application.Services.Contracts;
 global using PortFreight.Application.Services.Implementation;
+global using PortFreight.Application.DTOs.ShipmentDTO;
+global using PortFreight.Application.DTOs.TrackingEventDTO;
 global using PortFreight.Infrastructure;
 global using PortFreight.Infrastructure.Repositories.Contracts;
 global using PortFreight.Infrastructure.Repositories.Implementation;
