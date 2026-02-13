@@ -17,11 +17,19 @@ builder.Services.AddScoped<ITrackingEventService, TrackingEventService>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IShipmentRepository, ShipmentRepository>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ModelValidationFilter>();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseGlobalExceptionMiddleware();
+app.UseMiddleware<ValidationMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
