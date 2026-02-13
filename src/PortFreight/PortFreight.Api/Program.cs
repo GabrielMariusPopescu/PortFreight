@@ -1,8 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using PortFreight.Infrastructure;
-using PortFreight.Infrastructure.Repositories.Contracts;
-using PortFreight.Infrastructure.Repositories.Implementation;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<PortFreightDatabaseContext>(options =>
@@ -11,6 +6,13 @@ builder.Services.AddDbContext<PortFreightDatabaseContext>(options =>
     var assemblyName = typeof(PortFreightDatabaseContext).Assembly.FullName;
     options.UseSqlServer(connectionString, optionsBuilder => optionsBuilder.MigrationsAssembly(assemblyName));
 });
+
+builder.Services.AddScoped<IShipmentService, ShipmentService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IVesselService, VesselService>();
+builder.Services.AddScoped<IPortService, PortService>();
+builder.Services.AddScoped<IContainerService, ContainerService>();
+builder.Services.AddScoped<ITrackingEventService, TrackingEventService>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IShipmentRepository, ShipmentRepository>();

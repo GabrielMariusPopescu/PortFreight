@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PortFreight.Application\PortFreight.Application.csproj" />
     <ProjectReference Include="..\PortFreight.Infrastructure\PortFreight.Infrastructure.csproj" />
   </ItemGroup>
 

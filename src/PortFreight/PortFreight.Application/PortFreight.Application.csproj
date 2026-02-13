@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PortFreight.Domain\PortFreight.Domain.csproj" />
+    <ProjectReference Include="..\PortFreight.Infrastructure\PortFreight.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
