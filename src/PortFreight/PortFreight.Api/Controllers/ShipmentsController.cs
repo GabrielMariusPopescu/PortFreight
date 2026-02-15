@@ -68,7 +68,7 @@ public class ShipmentsController(IShipmentService service) : ControllerBase
     /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see langword="NoContent"/>
     /// if the update is successful; otherwise, <see langword="NotFound"/> if the shipment does not exist.</returns>
     [HttpPatch("{id:Guid}/status")]
-    public async Task<IActionResult> UpdateStatus(Guid id, UpdateShipmentStatusDto dto)
+    public async Task<IActionResult> UpdateStatus(Guid id, UpdateShipmentDto dto)
     {
         var success = await service.UpdateShipmentStatusAsync(id, dto.Status);
         return success ? NoContent() : NotFound();

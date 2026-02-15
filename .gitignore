@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /src/PortFreight/PortFreight.Api/appsettings.json
 /src/PortFreight/PortFreight.Api/appsettings.Development.json
+/src/PortFreight/PortFreight.MVC/appsettings.Development.json
+/src/PortFreight/PortFreight.MVC/appsettings.json
