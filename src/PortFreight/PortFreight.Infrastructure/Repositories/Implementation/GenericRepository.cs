@@ -1,9 +1,4 @@
-﻿using PortFreight.Infrastructure.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PortFreight.Infrastructure.Repositories.Implementation;
+﻿namespace PortFreight.Infrastructure.Repositories.Implementation;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
