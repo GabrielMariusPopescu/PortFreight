@@ -20,7 +20,7 @@ public class ShipmentsController(IShipmentService service) : ControllerBase
     /// <remarks>This method asynchronously fetches all available shipments and returns them as DTOs. If no
     /// shipments are found, the response is a 404 Not Found. Use this endpoint to obtain a complete list of shipments
     /// for further processing or display.</remarks>
-    /// <returns>An <see cref="IActionResult"/> containing a collection of shipment DTOs if any exist; otherwise, a 404 Not Found
+    /// <returns>A <see cref="IActionResult"/> containing a collection of shipment DTOs if any exist; otherwise, a 404 Not Found
     /// result.</returns>
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -35,7 +35,7 @@ public class ShipmentsController(IShipmentService service) : ControllerBase
     /// <remarks>This method performs an asynchronous operation to fetch the shipment. If no shipment exists
     /// for the specified identifier, the response is a 404 Not Found.</remarks>
     /// <param name="id">The unique identifier of the shipment to retrieve. Must be a valid <see cref="Guid"/>.</param>
-    /// <returns>An <see cref="IActionResult"/> containing the shipment details if found; otherwise, a NotFound result.</returns>
+    /// <returns>A <see cref="IActionResult"/> containing the shipment details if found; otherwise, a NotFound result.</returns>
     [HttpGet("{id:Guid}")]
     public async Task<IActionResult> Get(Guid id)
     {

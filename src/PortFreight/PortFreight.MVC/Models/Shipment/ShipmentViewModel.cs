@@ -1,22 +1,20 @@
-﻿namespace PortFreight.MVC.Models;
+﻿namespace PortFreight.MVC.Models.Shipment;
 
-public class CreateShipmentViewModel
+public class ShipmentViewModel
 {
-    [Required]
+    public Guid Id { get; set; }
+
     public string ReferenceNumber { get; set; } = string.Empty;
 
-    [Required]
     public Guid CustomerId { get; set; }
 
-    [Required]
     public Guid OriginPortId { get; set; }
 
-    [Required]
     public Guid DestinationPortId { get; set; }
 
-    [Required]
     public Guid VesselVoyageId { get; set; }
 
-    [Required]
     public ShipmentStatus Status { get; set; }
+
+    public DateTime CreatedAt { get; set; }
 }

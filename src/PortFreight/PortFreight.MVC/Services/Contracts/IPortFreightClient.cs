@@ -7,5 +7,4 @@ public interface IPortFreightClient
     Task<ShipmentViewModel> CreateShipmentAsync(CreateShipmentViewModel viewModel);
     Task UpdateShipmentAsync(Guid id, UpdateShipmentViewModel viewModel);
     Task DeleteShipmentAsync(Guid id);
-
 }

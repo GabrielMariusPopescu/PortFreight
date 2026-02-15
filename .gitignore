@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /src/PortFreight/PortFreight.Api/appsettings.Development.json
 /src/PortFreight/PortFreight.MVC/appsettings.Development.json
 /src/PortFreight/PortFreight.MVC/appsettings.json
+/src/PortFreight/PortFreight.MVC/wwwroot/lib

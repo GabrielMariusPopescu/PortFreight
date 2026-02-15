@@ -1,4 +1,4 @@
-﻿namespace PortFreight.MVC.Models;
+﻿namespace PortFreight.MVC.Models.Shipment;
 
 public class UpdateShipmentViewModel
 {
