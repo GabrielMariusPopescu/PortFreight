@@ -4,14 +4,14 @@ public class ShipmentsController(IPortFreightClient client) : Controller
 {
     public async Task<IActionResult> Index()
     {
-        var items = await client.GetAsync<ShipmentViewModel>("api/shipments");
-        return View(items);
+        var viewModel = await client.GetAsync<ShipmentViewModel>("api/shipments");
+        return View(viewModel);
     }
 
     public async Task<IActionResult> Details(Guid id)
     {
-        var item = await client.GetAsync<ShipmentViewModel>("api/shipments",id);
-        return item == null ? NotFound() : View(item);
+        var viewModel = await client.GetAsync<ShipmentViewModel>("api/shipments",id);
+        return viewModel == null ? NotFound() : View(viewModel);
     }
 
     [HttpGet] public IActionResult Create() => View();
@@ -21,6 +21,7 @@ public class ShipmentsController(IPortFreightClient client) : Controller
     {
         if (!ModelState.IsValid) 
             return View(viewModel);
+
         await client.CreateAsync("api/shipments",viewModel);
         return RedirectToAction(nameof(Index));
     }
