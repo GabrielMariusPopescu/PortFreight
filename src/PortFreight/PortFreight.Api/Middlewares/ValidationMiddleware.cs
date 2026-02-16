@@ -9,8 +9,7 @@
 /// details, a message, status code, and timestamp. This ensures clients receive consistent feedback for validation
 /// failures.</remarks>
 /// <param name="next">The next middleware delegate in the HTTP request processing pipeline. This parameter cannot be null.</param>
-/// <param name="logger">The logger used to record validation-related information and errors. This parameter cannot be null.</param>
-public class ValidationMiddleware(RequestDelegate next, ILogger<ValidationMiddleware> logger)
+public class ValidationMiddleware(RequestDelegate next)
 {
     /// <summary>
     /// Invokes the next middleware in the HTTP request pipeline and returns a JSON response containing validation error
@@ -26,10 +25,8 @@ public class ValidationMiddleware(RequestDelegate next, ILogger<ValidationMiddle
         await next(context);
 
         if (context.Response.StatusCode == (int)HttpStatusCode.BadRequest &&
-            context.Items.ContainsKey("ValidationErrors"))
+            context.Items.TryGetValue("ValidationErrors", out var errors))
         {
-            var errors = context.Items["ValidationErrors"];
-
             var response = new
             {
                 Message = "Validation failed",

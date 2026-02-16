@@ -13,30 +13,45 @@
 public class TrackingEventController(ITrackingEventService service) : ControllerBase
 {
     /// <summary>
-    /// Retrieves all tracking events associated with the specified shipment identifier. If no tracking events are found for the given shipment ID, a 404 Not Found response is returned.
+    /// Retrieves all tracking events associated with a specific shipment.
     /// </summary>
-    /// <param name="shipmentId">The unique identifier of the shipment to track events for. Must be a valid <see cref="Guid"/>.</param>
-    /// <returns>A <see cref="IActionResult"/> containing the tracking event details if found; otherwise, a NotFound result.</returns>
+    /// <param name="shipmentId">The unique identifier (GUID) of the shipment.</param>
+    /// <returns>
+    /// 200 OK with a collection of tracking events if any exist;  
+    /// 404 Not Found if no tracking events are found for the shipment.
+    /// </returns>
     [HttpGet("shipment/{shipmentId:Guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetForShipment(Guid shipmentId)
     {
-        var trackingEvents = (await service.GetTrackingEventsForShipmentAsync(shipmentId)).ToList();
-        return !trackingEvents.Any() 
-            ? NotFound() 
+        var trackingEvents =
+            (await service.GetTrackingEventsForShipmentAsync(shipmentId)).ToList();
+
+        return !trackingEvents.Any()
+            ? NotFound()
             : Ok(trackingEvents.Select(trackingEvent => trackingEvent.ToDto()));
     }
 
     /// <summary>
-    /// Creates a new tracking event for the specified shipment identifier using the provided data transfer object (DTO). The DTO contains
+    /// Creates a new tracking event for a specific shipment.
     /// </summary>
-    /// <param name="shipmentId">The unique identifier of the shipment to track events for. Must be a valid <see cref="Guid"/>.</param>
-    /// <param name="dto">The data transfer object containing the details of the tracking event to create. Cannot be null.</param>
-    /// <returns>A 201 Created response containing details of newly created tracking event, including its identifier.</returns>
+    /// <param name="shipmentId">
+    /// The unique identifier (GUID) of the shipment to which the tracking event belongs.
+    /// </param>
+    /// <param name="dto">The data transfer object containing tracking event details.</param>
+    /// <returns>
+    /// 200 OK with the created tracking event;  
+    /// 400 Bad Request if the input is invalid.
+    /// </returns>
     [HttpPost("{shipmentId:Guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(Guid shipmentId, CreateTrackingEventDto dto)
     {
         var trackingEvent = dto.ToTrackingEvent(shipmentId);
         var created = await service.AddTrackingEventAsync(trackingEvent);
+
         return Ok(created.ToDto());
     }
 }

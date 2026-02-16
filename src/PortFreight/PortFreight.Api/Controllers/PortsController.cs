@@ -23,7 +23,7 @@ public class PortsController(IPortService service) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var ports = await service.GetAllPortsAsync();
+        var ports = (await service.GetAllPortsAsync()).ToList();
         return !ports.Any() 
             ? NotFound() 
             : Ok(ports.Select(port => port.ToDto()));
@@ -67,7 +67,7 @@ public class PortsController(IPortService service) : ControllerBase
     /// <param name="id">The unique identifier of the port to update.</param>
     /// <param name="dto">An object containing the updated values for the port. The <see cref="UpdatePortDto.Id"/> property must match the
     /// specified <paramref name="id"/>.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
     /// if the update is successful; <see cref="BadRequestResult"/> if the identifiers do not match; or <see
     /// cref="NotFoundResult"/> if the port does not exist.</returns>
     [HttpPut("{id:Guid}")]
@@ -92,7 +92,7 @@ public class PortsController(IPortService service) : ControllerBase
     /// <remarks>This operation is asynchronous. Ensure that the provided identifier corresponds to an
     /// existing port before calling this method.</remarks>
     /// <param name="id">The unique identifier of the port to delete. Must be a valid <see cref="Guid"/>.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the delete operation. Returns <see
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the delete operation. Returns <see
     /// cref="NoContentResult"/> if the deletion is successful; otherwise, returns <see cref="NotFoundResult"/> if the
     /// port does not exist.</returns>
     [HttpDelete("{id:Guid}")]

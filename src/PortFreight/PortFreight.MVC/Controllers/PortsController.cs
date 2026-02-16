@@ -1,54 +1,54 @@
 ﻿namespace PortFreight.MVC.Controllers;
 
-public class CustomersController(IPortFreightClient client) : Controller
+public class PortsController(IPortFreightClient client) : Controller
 {
     public async Task<IActionResult> Index()
     {
-        var viewModel = await client.GetAsync<CustomerViewModel>("api/customers");
+        var viewModel = await client.GetAsync<PortViewModel>("api/ports");
         return View(viewModel);
     }
 
 
     public async Task<IActionResult> Details(Guid id)
     {
-        var viewModel = await client.GetAsync<CustomerViewModel>("api/customers", id);
+        var viewModel = await client.GetAsync<PortViewModel>("api/ports", id);
         return viewModel == null ? NotFound() : View(viewModel);
     }
 
     [HttpGet] public IActionResult Create() => View();
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateCustomerViewModel viewModel)
+    public async Task<IActionResult> Create(CreatePortViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return View(viewModel);
 
-        await client.CreateAsync("api/customers", viewModel);
+        await client.CreateAsync("api/ports", viewModel);
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public async Task<IActionResult> Update(Guid id)
     {
-        var viewModel = await client.GetAsync<UpdateCustomerViewModel>("api/customers", id);
+        var viewModel = await client.GetAsync<UpdatePortViewModel>("api/ports", id);
         return viewModel == null ? NotFound() : View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(Guid id, UpdateCustomerViewModel viewModel)
+    public async Task<IActionResult> Update(Guid id, UpdatePortViewModel viewModel)
     {
         if (!ModelState.IsValid)
             return RedirectToAction(nameof(Index));
 
-        await client.UpdateAsync("api/customers", id, viewModel);
+        await client.UpdateAsync("api/ports", id, viewModel);
         return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var viewModel = await client.GetAsync<CustomerViewModel>("api/customers", id);
+        var viewModel = await client.GetAsync<PortViewModel>("api/ports", id);
         return viewModel == null ? NotFound() : View(viewModel);
     }
 
@@ -56,7 +56,8 @@ public class CustomersController(IPortFreightClient client) : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
-        await client.DeleteAsync<CustomerViewModel>("api/customers", id);
+        await client.DeleteAsync<PortViewModel>("api/ports", id);
         return RedirectToAction(nameof(Index));
     }
 }
+

@@ -14,12 +14,12 @@ public class ContainersController(IContainerService service) : ControllerBase
     /// </summary>
     /// <remarks>This method asynchronously obtains all containers and returns them as DTOs. If no containers
     /// are available, the response is a 404 Not Found.</remarks>
-    /// <returns>An <see cref="IActionResult"/> that contains a collection of container data transfer objects if any are found;
+    /// <returns>A <see cref="IActionResult"/> that contains a collection of container data transfer objects if any are found;
     /// otherwise, a NotFound result.</returns>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var containers = await service.GetAllContainersAsync();
+        var containers = (await service.GetAllContainersAsync()).ToList();
         return !containers.Any() ? NotFound() : Ok(containers.Select(container => container.ToDto()));
     }
 
@@ -29,7 +29,7 @@ public class ContainersController(IContainerService service) : ControllerBase
     /// <remarks>This method asynchronously queries the underlying service for a container with the given
     /// identifier. If no container exists with the specified ID, a NotFound result is returned.</remarks>
     /// <param name="id">The unique identifier of the container to retrieve. Must be a valid <see cref="System.Guid"/>.</param>
-    /// <returns>An <see cref="IActionResult"/> that represents the result of the operation. Returns a 200 OK response with the
+    /// <returns>A <see cref="IActionResult"/> that represents the result of the operation. Returns a 200 OK response with the
     /// container data if found; otherwise, returns a 404 Not Found response.</returns>
     [HttpGet("{id:Guid}")]
     public async Task<IActionResult> Get(Guid id)
@@ -64,7 +64,7 @@ public class ContainersController(IContainerService service) : ControllerBase
     /// <param name="id">The unique identifier of the container to update. Must match the ID in <paramref name="dto"/>.</param>
     /// <param name="dto">An object containing the updated data for the container. The <c>Id</c> property must match the <paramref
     /// name="id"/> parameter.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
     /// if the update is successful; otherwise, returns <see cref="BadRequestResult"/> if the IDs do not match, or <see
     /// cref="NotFoundResult"/> if the container does not exist.</returns>
     [HttpPut("{id:Guid}")]

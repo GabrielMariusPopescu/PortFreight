@@ -25,7 +25,7 @@ public class ShipmentsController(IShipmentService service) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var shipments = await service.GetAllShipmentsAsync();
+        var shipments = (await service.GetAllShipmentsAsync()).ToList();
         return !shipments.Any() ? NotFound() : Ok(shipments.Select(shipment => shipment.ToDto()));
     }
 
@@ -65,7 +65,7 @@ public class ShipmentsController(IShipmentService service) : ControllerBase
     /// name="dto"/> is valid and supported by the system.</remarks>
     /// <param name="id">The unique identifier of the shipment whose status is to be updated.</param>
     /// <param name="dto">An object containing the new status information to apply to the shipment.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see langword="NoContent"/>
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the operation. Returns <see langword="NoContent"/>
     /// if the update is successful; otherwise, <see langword="NotFound"/> if the shipment does not exist.</returns>
     [HttpPatch("{id:Guid}/status")]
     public async Task<IActionResult> UpdateStatus(Guid id, UpdateShipmentDto dto)

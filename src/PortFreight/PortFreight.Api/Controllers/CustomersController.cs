@@ -17,12 +17,12 @@ public class CustomersController(ICustomerService service) : ControllerBase
     /// <remarks>This method asynchronously fetches all customers from the underlying service and transforms
     /// each customer entity into a DTO for the response. If no customers exist, the response will indicate that no
     /// resources were found.</remarks>
-    /// <returns>An <see cref="IActionResult"/> that contains a list of customer DTOs with a 200 OK response if any customers are
+    /// <returns>A <see cref="IActionResult"/> that contains a list of customer DTOs with a 200 OK response if any customers are
     /// found; otherwise, a 404 Not Found response.</returns>
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var customers = await service.GetAllCustomersAsync();
+        var customers = (await service.GetAllCustomersAsync()).ToList();
         return !customers.Any() ? NotFound() : Ok(customers.Select(customer => customer.ToDto()));
     }
 
@@ -72,7 +72,7 @@ public class CustomersController(ICustomerService service) : ControllerBase
     /// <param name="id">The unique identifier of the customer to update. Must match the identifier in <paramref name="dto"/>.</param>
     /// <param name="dto">An object containing the updated customer information. The <c>Id</c> property must match the <paramref
     /// name="id"/> parameter.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
     /// if the update is successful; otherwise, returns <see cref="BadRequestResult"/> if the identifiers do not match,
     /// or <see cref="NotFoundResult"/> if the customer does not exist.</returns>
     [HttpPut("{id:Guid}")]
@@ -97,7 +97,7 @@ public class CustomersController(ICustomerService service) : ControllerBase
     /// <remarks>This operation is asynchronous. Ensure that the specified identifier corresponds to an
     /// existing customer before calling this method.</remarks>
     /// <param name="id">The unique identifier of the customer to delete. Must be a valid <see cref="System.Guid"/>.</param>
-    /// <returns>An <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
+    /// <returns>A <see cref="IActionResult"/> that indicates the result of the operation. Returns <see cref="NoContentResult"/>
     /// if the customer was deleted successfully; otherwise, <see cref="NotFoundResult"/> if the customer does not
     /// exist.</returns>
     [HttpDelete("{id:Guid}")]
