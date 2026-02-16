@@ -1,7 +1,7 @@
-﻿@model IEnumerable<VesselViewModel>
+﻿@model IEnumerable<ContainerViewModel>
 
 @{
-    ViewData["Title"] = "Vessels";
+    ViewData["Title"] = "Containers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -17,13 +17,16 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.ContainerNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IMO)
+                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CapacityTEU)
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShipmentId)
             </th>
             <th></th>
         </tr>
@@ -35,13 +38,16 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.ContainerNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IMO)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CapacityTEU)
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipmentId)
             </td>
             <td>
                 @Html.ActionLink("Update", "Update", new { id=item.Id }) |
