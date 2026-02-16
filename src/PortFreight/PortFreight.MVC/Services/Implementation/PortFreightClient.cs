@@ -2,37 +2,36 @@
 
 public class PortFreightClient(HttpClient httpClient) : IPortFreightClient
 {
-    public async Task<IEnumerable<ShipmentViewModel>> GetShipmentsAsync()
+    public async Task<IEnumerable<T>> GetAsync<T>(string url)
     {
-        var response = await httpClient.GetAsync("api/shipments");
+        var response = await httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<IEnumerable<ShipmentViewModel>>() ?? Enumerable.Empty<ShipmentViewModel>();
+        return await response.Content.ReadFromJsonAsync<IEnumerable<T>>() ?? Enumerable.Empty<T>();
     }
 
-
-    public async Task<ShipmentViewModel?> GetShipmentAsync(Guid id)
+    public async Task<T?> GetAsync<T>(string url, Guid id)
     {
-        var response = await httpClient.GetAsync($"api/shipments/{id}");
+        var response = await httpClient.GetAsync($"{url}/{id}");
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<ShipmentViewModel>() ?? null;
+        return await response.Content.ReadFromJsonAsync<T>() ?? default(T);
     }
 
-    public async Task<ShipmentViewModel> CreateShipmentAsync(CreateShipmentViewModel viewModel)
+    public async Task<T> CreateAsync<T>(string url, T viewModel)
     {
-        var response = await httpClient.PostAsJsonAsync("api/shipments", viewModel);
+        var response = await httpClient.PostAsJsonAsync(url, viewModel);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<ShipmentViewModel>() ?? throw new Exception("Failed to create shipment");
+        return await response.Content.ReadFromJsonAsync<T>() ?? throw new Exception($"Failed to create {nameof(viewModel)}");
     }
 
-    public async Task UpdateShipmentAsync(Guid id, UpdateShipmentViewModel viewModel)
+    public async Task UpdateAsync<T>(string url, Guid id, T viewModel)
     {
-        var response = await httpClient.PutAsJsonAsync($"api/shipments/{id}", viewModel);
+        var response = await httpClient.PutAsJsonAsync($"{url}/{id}", viewModel);
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task DeleteShipmentAsync(Guid id)
+    public async Task DeleteAsync<T>(string url, Guid id)
     {
-        var response = await httpClient.DeleteAsync($"api/shipments/{id}");
+        var response = await httpClient.DeleteAsync($"{url}/{id}");
         response.EnsureSuccessStatusCode();
     }
 }
