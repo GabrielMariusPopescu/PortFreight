@@ -1,0 +1,43 @@
+﻿@model CreateTrackingEventViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-control">
+                <label asp-for="EventType"></label>
+                <input asp-for="EventType" class="form-control" />
+                <span asp-validation-for="EventType" class="text-danger"></span>
+            </div>
+            <div class="form-control">
+                <label asp-for="Location"></label>
+                <input asp-for="Location" class="form-control" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+            <div class="form-control">
+                <label asp-for="ShipmentId"></label>
+                <input asp-for="ShipmentId" class="form-control" />
+                <span asp-validation-for="ShipmentId" class="text-danger"></span>
+            </div>
+            <div class="form-control">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

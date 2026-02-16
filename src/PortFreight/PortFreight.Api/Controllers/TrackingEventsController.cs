@@ -10,7 +10,7 @@
 /// records.</param>
 [ApiController]
 [Route("api/[controller]")]
-public class TrackingEventController(ITrackingEventService service) : ControllerBase
+public class TrackingEventsController(ITrackingEventService service) : ControllerBase
 {
     /// <summary>
     /// Retrieves all tracking events associated with a specific shipment.
@@ -20,7 +20,7 @@ public class TrackingEventController(ITrackingEventService service) : Controller
     /// 200 OK with a collection of tracking events if any exist;  
     /// 404 Not Found if no tracking events are found for the shipment.
     /// </returns>
-    [HttpGet("shipment/{shipmentId:Guid}")]
+    [HttpGet("shipments/{shipmentId:Guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetForShipment(Guid shipmentId)

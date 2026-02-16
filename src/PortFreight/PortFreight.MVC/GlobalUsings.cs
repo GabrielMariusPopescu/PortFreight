@@ -7,6 +7,7 @@ global using PortFreight.MVC.Models.Container;
 global using PortFreight.MVC.Models.Customer;
 global using PortFreight.MVC.Models.Port;
 global using PortFreight.MVC.Models.Shipment;
+global using PortFreight.MVC.Models.TrackingEvent;
 global using PortFreight.MVC.Models.Vessel;
 global using PortFreight.MVC.Services.Contracts;
 global using PortFreight.MVC.Services.Implementation;
