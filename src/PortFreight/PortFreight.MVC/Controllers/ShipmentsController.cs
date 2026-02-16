@@ -19,7 +19,8 @@ public class ShipmentsController(IPortFreightClient client) : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateShipmentViewModel viewModel)
     {
-        if (!ModelState.IsValid) return View(viewModel);
+        if (!ModelState.IsValid) 
+            return View(viewModel);
         await client.CreateAsync("api/shipments",viewModel);
         return RedirectToAction(nameof(Index));
     }
@@ -27,11 +28,12 @@ public class ShipmentsController(IPortFreightClient client) : Controller
     [HttpGet]
     public async Task<IActionResult> Update(Guid id)
     {
-        var item = await client.GetAsync<ShipmentViewModel>("api/shipments", id);
-        return item == null ? NotFound() : View(item);
+        var viewModel = await client.GetAsync<ShipmentViewModel>("api/shipments", id);
+        return viewModel == null ? NotFound() : View(viewModel);
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Update(Guid id, UpdateShipmentViewModel viewModel)
     {
         if (!ModelState.IsValid)
@@ -41,10 +43,18 @@ public class ShipmentsController(IPortFreightClient client) : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await client.DeleteAsync<ShipmentViewModel>("api/shipments",id);
+        var viewModel = await client.GetAsync<ShipmentViewModel>("api/shipments", id);
+        return viewModel == null ? NotFound() : View(viewModel);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    {
+        await client.DeleteAsync<ShipmentViewModel>("api/shipments", id);
         return RedirectToAction(nameof(Index));
     }
 }
