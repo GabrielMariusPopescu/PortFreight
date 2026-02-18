@@ -1,12 +1,11 @@
 ﻿namespace PortFreight.Infrastructure.Repositories.Implementation;
 
-public class ShipmentRepository : GenericRepository<Shipment>, IShipmentRepository
+public class ShipmentRepository(PortFreightDatabaseContext context)
+    : GenericRepository<Shipment>(context), IShipmentRepository
 {
-    public ShipmentRepository(PortFreightDatabaseContext context) : base(context) { }
-
     public async Task<Shipment?> GetShipmentWithDetailsAsync(Guid id)
     {
-        return await _context.Shipments
+        return await Context.Shipments
             .Include(shipment => shipment.Customer)
             .Include(shipment => shipment.Containers)
             .Include(shipment => shipment.TrackingEvents)

@@ -24,7 +24,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwt["Issuer"],
             ValidAudience = jwt["Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(bytes)
+            IssuerSigningKey = new SymmetricSecurityKey(bytes),
+            ClockSkew = TimeSpan.FromMinutes(5),
+            RoleClaimType = ClaimTypes.Role
         };
     });
 
@@ -39,8 +41,6 @@ builder.Services.AddIdentity<User, Role>(options =>
     })
     .AddEntityFrameworkStores<IdentityDatabaseContext>()
     .AddDefaultTokenProviders();
-
-builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddDbContext<PortFreightDatabaseContext>(options =>
 {

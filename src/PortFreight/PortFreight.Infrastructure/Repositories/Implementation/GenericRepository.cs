@@ -1,15 +1,10 @@
 ﻿namespace PortFreight.Infrastructure.Repositories.Implementation;
 
-public class GenericRepository<T> : IGenericRepository<T> where T : class
+public class GenericRepository<T>(PortFreightDatabaseContext context) : IGenericRepository<T>
+    where T : class
 {
-    protected readonly PortFreightDatabaseContext _context;
-    protected readonly DbSet<T> _dbSet;
-
-    public GenericRepository(PortFreightDatabaseContext context)
-    {
-        _context = context;
-        _dbSet = context.Set<T>();
-    }
+    protected readonly PortFreightDatabaseContext Context = context;
+    private readonly DbSet<T> _dbSet = context.Set<T>();
 
     public async Task<T?> GetByIdAsync(Guid id) =>
         await _dbSet.FindAsync(id);
@@ -20,13 +15,21 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public async Task AddAsync(T entity) =>
         await _dbSet.AddAsync(entity);
 
-    public void Update(T entity) =>
-        _dbSet.Update(entity);
+    public bool Update(T entity)
+    {
+        var updated = _dbSet.Update(entity);
+        var state = updated.State;
+        return state == EntityState.Modified;
+    }
 
-    public void Delete(T entity) =>
-        _dbSet.Remove(entity);
+    public bool Delete(T entity)
+    {
+        var deleted = _dbSet.Remove(entity);
+        var state = deleted.State;
+        return state == EntityState.Deleted;
+    }
 
     public async Task SaveChangesAsync() =>
-        await _context.SaveChangesAsync();
+        await Context.SaveChangesAsync();
 }
 

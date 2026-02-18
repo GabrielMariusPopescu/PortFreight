@@ -12,13 +12,7 @@ builder.Services.AddScoped<ApiClient>();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthentication("PortFreightCookie")
-    .AddCookie("PortFreightCookie", options =>
-    {
-        options.LoginPath = "/api/Auth/Login";
-        options.LogoutPath = "/api/Auth/Logout";
-    });
-
+builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 

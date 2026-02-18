@@ -26,7 +26,6 @@ global using PortFreight.Application.Validation.Implementation;
 global using PortFreight.Domain.Enums;
 global using PortFreight.Identity;
 global using PortFreight.Identity.Models;
-global using PortFreight.Identity.Services;
 global using PortFreight.Infrastructure;
 global using PortFreight.Infrastructure.Repositories.Contracts;
 global using PortFreight.Infrastructure.Repositories.Implementation;

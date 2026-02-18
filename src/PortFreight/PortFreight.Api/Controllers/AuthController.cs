@@ -6,7 +6,7 @@
 [AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(UserManager<User> userManager, TokenService tokenService, IdentityDatabaseContext identityContext, IConfiguration configuration) : ControllerBase
+public class AuthController(UserManager<User> userManager, IConfiguration configuration) : ControllerBase
 {
     /// <summary>
     /// Logins a user by validating their credentials and generating a JWT token if successful.
@@ -85,66 +85,6 @@ public class AuthController(UserManager<User> userManager, TokenService tokenSer
         await userManager.AddToRoleAsync(user, RoleType.Unknown.GetDisplayName());
 
         return Ok("User registered successfully");
-    }
-
-    /// <summary>
-    /// Refreshes a JWT token by validating the provided refresh token, rotating it, and issuing a new JWT if valid.
-    /// </summary>
-    /// <param name="dto">An object containing refresh token details</param>
-    /// <returns>An IActionResult that represents the result of the refresh operation.</returns>
-    [HttpPost("refresh")]
-    public async Task<IActionResult> Refresh(RefreshRequest dto)
-    {
-        var stored = await identityContext.RefreshTokens
-            .Include(x => x.User)
-            .FirstOrDefaultAsync(x => x.Token == dto.RefreshToken);
-
-        if (stored == null || stored.Revoked || stored.ExpiresAt < DateTime.UtcNow)
-            return Unauthorized("Invalid refresh token");
-
-        // Rotate token
-        stored.Revoked = true;
-
-        var newRefresh = new RefreshToken
-        {
-            Token = tokenService.GenerateRefreshToken(),
-            UserId = stored.UserId,
-            CreatedAt = DateTime.UtcNow,
-            ExpiresAt = DateTime.UtcNow.AddDays(7)
-        };
-
-        identityContext.RefreshTokens.Add(newRefresh);
-        await identityContext.SaveChangesAsync();
-
-        // Issue new JWT
-        var roles = await userManager.GetRolesAsync(stored.User);
-
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, stored.User.UserName!),
-            new Claim(ClaimTypes.NameIdentifier, stored.User.Id)
-        };
-
-        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
-
-        var key = configuration["Jwt:Key"]!;
-        var bytes = Encoding.UTF8.GetBytes(key);
-        var symmetricSecurityKey = new SymmetricSecurityKey(bytes);
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-
-        var jwt = new JwtSecurityToken(
-            issuer: configuration["Jwt:Issuer"],
-            audience: configuration["Jwt:Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
-            signingCredentials: signingCredentials
-        );
-
-        return Ok(new
-        {
-            token = new JwtSecurityTokenHandler().WriteToken(jwt),
-            refreshToken = newRefresh.Token
-        });
     }
 }
 

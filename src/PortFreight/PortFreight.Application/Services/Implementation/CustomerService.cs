@@ -1,46 +1,40 @@
 ﻿namespace PortFreight.Application.Services.Implementation;
 
-public class CustomerService : ICustomerService
+public class CustomerService(IGenericRepository<Customer> repository) 
+    : ICustomerService
 {
-    private readonly IGenericRepository<Customer> _repository;
-
-    public CustomerService(IGenericRepository<Customer> repository)
-    {
-        _repository = repository;
-    }
-
     public async Task<Customer?> GetCustomerAsync(Guid id) =>
-        await _repository.GetByIdAsync(id);
+        await repository.GetByIdAsync(id);
 
     public async Task<IEnumerable<Customer>> GetAllCustomersAsync() =>
-        await _repository.GetAllAsync();
+        await repository.GetAllAsync();
 
     public async Task<Customer> CreateCustomerAsync(Customer customer)
     {
-        await _repository.AddAsync(customer);
-        await _repository.SaveChangesAsync();
+        await repository.AddAsync(customer);
+        await repository.SaveChangesAsync();
         return customer;
     }
 
     public async Task<bool> UpdateCustomerAsync(Customer customer)
     {
-        var existing = await _repository.GetByIdAsync(customer.Id);
+        var existing = await repository.GetByIdAsync(customer.Id);
         if (existing == null)
             return false;
 
-        _repository.Update(customer);
-        await _repository.SaveChangesAsync();
-        return true;
+        var updated = repository.Update(customer);
+        await repository.SaveChangesAsync();
+        return updated;
     }
 
     public async Task<bool> DeleteCustomerAsync(Guid id)
     {
-        var customer = await _repository.GetByIdAsync(id);
+        var customer = await repository.GetByIdAsync(id);
         if (customer == null)
             return false;
 
-        _repository.Delete(customer);
-        await _repository.SaveChangesAsync();
-        return true;
+        var deleted = repository.Delete(customer);
+        await repository.SaveChangesAsync();
+        return deleted;
     }
 }
