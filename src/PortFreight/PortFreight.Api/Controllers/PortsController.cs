@@ -8,7 +8,6 @@
 /// of each operation.</remarks>
 /// <param name="service">The service used to perform operations related to ports, such as retrieving, creating, updating, and deleting port
 /// data.</param>
-[Authorize(Roles = "Administrator")]
 [ApiController]
 [Route("api/[controller]")]
 public class PortsController(IPortService service) : ControllerBase

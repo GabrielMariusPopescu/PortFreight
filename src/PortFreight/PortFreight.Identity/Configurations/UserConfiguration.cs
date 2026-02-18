@@ -10,7 +10,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             FirstName = "Jon",
             LastName = "Doe",
             Email = "administrator@portfreight.co.uk",
-            UserName = "Jon Doe"
+            NormalizedEmail = "ADMNISTRATOR@PORTFREIGHT.CO.UK",
+            UserName = "Jon Doe",
+            NormalizedUserName = "JON DOE"
         };
         administrator.PasswordHash = HashPassword(administrator, "P@ssword123!");
 
@@ -20,7 +22,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             FirstName = "Bob",
             LastName = "Johnson",
             Email = "manager@portfreight.co.uk",
-            UserName = "Bob Johnson"
+            NormalizedEmail = "MANAGER@PORTFREIGHT.CO.UK",
+            UserName = "Bob Johnson",
+            NormalizedUserName = "BOB JOHNSON"
         };
         manager.PasswordHash = HashPassword(manager, "P@ssword123!");
 
@@ -30,7 +34,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             FirstName = "Jane",
             LastName = "Smith",
             Email = "user@portfreight.co.uk",
-            UserName = "Jane Smith"
+            NormalizedEmail = "USER@PORTFREIGHT.CO.UK",
+            UserName = "Jane Smith",
+            NormalizedUserName = "JANE SMITH"
         };
         user.PasswordHash = HashPassword(user, "P@ssword123!");
 
@@ -40,7 +46,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             FirstName = "Alice",
             LastName = "Williams",
             Email = "unknown@portfreight.co.uk",
-            UserName = "Alice Williams"
+            NormalizedEmail = "UNKNOWN@PORTFREIGHT.CO.UK",
+            UserName = "Alice Williams",
+            NormalizedUserName = "ALICE WILLIAMS"
         };
 
         unknown.PasswordHash = HashPassword(unknown, "P@ssword123!");

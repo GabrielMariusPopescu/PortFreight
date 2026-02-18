@@ -30,7 +30,7 @@ public class AuthController(UserManager<User> userManager, TokenService tokenSer
             new(ClaimTypes.GivenName, user.FirstName),
             new(ClaimTypes.Surname, user.LastName),
             new(ClaimTypes.NameIdentifier, user.Id),
-            new(ClaimTypes.Name, user.UserName!),
+            new(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
             new(ClaimTypes.Email, user.Email!),
             new(ClaimTypes.Role, roles.First())
         };

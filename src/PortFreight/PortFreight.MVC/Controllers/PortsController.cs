@@ -1,6 +1,5 @@
 ﻿namespace PortFreight.MVC.Controllers;
 
-[Authorize(Roles = "Administrator")]
 public class PortsController(IPortFreightClient client) : Controller
 {
     public async Task<IActionResult> Index()
