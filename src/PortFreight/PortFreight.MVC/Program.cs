@@ -7,7 +7,20 @@ builder.Services.AddHttpClient<IPortFreightClient, PortFreightClient>(client =>
     client.DefaultRequestHeaders.Accept.Add(value);
 });
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ApiClient>();
+
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication("PortFreightCookie")
+    .AddCookie("PortFreightCookie", options =>
+    {
+        options.LoginPath = "/api/Auth/Login";
+        options.LogoutPath = "/api/Auth/Logout";
+    });
+
+builder.Services.AddAuthorization();
+
 
 var app = builder.Build();
 
@@ -22,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

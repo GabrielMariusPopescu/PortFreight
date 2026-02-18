@@ -1,5 +1,6 @@
 ﻿namespace PortFreight.MVC.Models.Port;
 
+[Authorize(Roles = "Administrator")]
 public class UpdatePortViewModel
 {
     [Display(Name = "Id")]

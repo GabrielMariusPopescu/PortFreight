@@ -1,10 +1,18 @@
 ﻿// Global using directives
 
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.Data;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Mvc.Filters;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Extensions;
+global using Microsoft.OpenApi.Models;
 global using PortFreight.Api.Middlewares;
 global using PortFreight.Api.Models;
+global using PortFreight.Application.DTOs.AuthDTO;
 global using PortFreight.Application.DTOs.ContainerDTO;
 global using PortFreight.Application.DTOs.CustomerDTO;
 global using PortFreight.Application.DTOs.PortDTO;
@@ -15,9 +23,17 @@ global using PortFreight.Application.Mappings;
 global using PortFreight.Application.Services.Contracts;
 global using PortFreight.Application.Services.Implementation;
 global using PortFreight.Application.Validation.Implementation;
+global using PortFreight.Domain.Enums;
+global using PortFreight.Identity;
+global using PortFreight.Identity.Models;
+global using PortFreight.Identity.Services;
 global using PortFreight.Infrastructure;
 global using PortFreight.Infrastructure.Repositories.Contracts;
 global using PortFreight.Infrastructure.Repositories.Implementation;
 global using System.Diagnostics;
+global using System.IdentityModel.Tokens.Jwt;
 global using System.Net;
+global using System.Reflection;
+global using System.Security.Claims;
+global using System.Text;
 global using System.Text.Json;

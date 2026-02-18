@@ -1,6 +1,4 @@
-﻿using PortFreight.Domain.Enums;
-
-namespace PortFreight.Infrastructure;
+﻿namespace PortFreight.Infrastructure;
 
 public class PortFreightDatabaseContext(DbContextOptions<PortFreightDatabaseContext> options) : DbContext(options)
 {
