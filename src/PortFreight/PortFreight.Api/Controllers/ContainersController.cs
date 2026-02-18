@@ -20,7 +20,8 @@ public class ContainersController(IContainerService service) : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         var containers = (await service.GetAllContainersAsync()).ToList();
-        return !containers.Any() ? NotFound() : Ok(containers.Select(container => container.ToDto()));
+        var dtos = containers.Select(container => container.ToDto());
+        return !containers.Any() ? NotFound() : Ok(dtos);
     }
 
     /// <summary>

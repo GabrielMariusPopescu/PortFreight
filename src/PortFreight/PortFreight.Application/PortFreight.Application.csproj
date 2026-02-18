@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PortFreight.Domain\PortFreight.Domain.csproj" />
+    <ProjectReference Include="..\PortFreight.Identity\PortFreight.Identity.csproj" />
     <ProjectReference Include="..\PortFreight.Infrastructure\PortFreight.Infrastructure.csproj" />
   </ItemGroup>
 

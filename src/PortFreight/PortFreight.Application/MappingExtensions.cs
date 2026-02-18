@@ -2,6 +2,9 @@
 
 public static class MappingExtensions
 {
-    public static List<TOut> MapList<TIn, TOut>(this IEnumerable<TIn> list, Func<TIn, TOut> map)
-        => [.. list.Select(map)];
+    public static Guid ToGuid(this string id)
+    {
+        var isValidGuid = Guid.TryParse(id, out Guid guid);
+        return isValidGuid ? guid : Guid.Empty;
+    }
 }
